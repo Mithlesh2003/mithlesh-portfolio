@@ -5,7 +5,7 @@ résumé cannot carry the before/after of a six-system plant rebuild, so every
 system here gets a full case study — the mess it replaced, what was built, the
 honest ownership split, the numbers since go-live, and screenshots.
 
-Live: _add the deployed URL here after the first deploy_
+Live: https://mithlesh2003.github.io/mithlesh-portfolio/
 Replaces: the earlier one-page version at `portfolio--m-k-k-1.replit.app`
 
 ## Stack
