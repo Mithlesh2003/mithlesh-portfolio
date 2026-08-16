@@ -7,7 +7,7 @@ export const profile = {
   location: "Karala, Delhi — 110081, India",
   email: "mithlesh100903@gmail.com",
   phone: "+91 70659 48948",
-  linkedin: "https://www.linkedin.com/in/mithlesh-kumar",
+  linkedin: "https://www.linkedin.com/in/mithlesh-kumar-05909a297/",
   hero: {
     line1: "I build the systems",
     line2: "that run a factory.",
