@@ -67,8 +67,67 @@ src/
 
 ## Deploy
 
-Vercel: import the repo, framework auto-detects as Next.js, no environment
-variables needed. Any Node host works — `npm run build && npm start`.
+### Option A — Vercel (recommended)
+
+Import the repo at [vercel.com/new](https://vercel.com/new). Framework
+auto-detects as Next.js, no environment variables, no config. Keeps image
+optimization and gives a preview URL for every branch.
+
+### Option B — GitHub Pages
+
+Already wired. [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml)
+builds a static export and publishes it on every push to `main`.
+
+One-time setup: repo **Settings → Pages → Build and deployment → Source:
+GitHub Actions**. The site then lives at
+`https://<user>.github.io/mithlesh-portfolio/`.
+
+Pages needs a sub-path and cannot run Next's image optimizer, so the workflow
+sets `GITHUB_PAGES=true`, which switches [`next.config.ts`](next.config.ts) to
+`output: "export"`, `basePath: "/mithlesh-portfolio"` and unoptimized images.
+Local dev and Vercel are unaffected.
+
+If the repo is renamed, or a custom domain / `<user>.github.io` repo is used
+(both serve from the root), change `basePath` — set the
+`GITHUB_PAGES_BASE_PATH` env var, to `""` for root-served sites.
+
+Test the static build locally the way CI does:
+
+```bash
+GITHUB_PAGES=true npm run build
+```
+
+Trade-off: Pages is free and tied to the repo, but serves unoptimized images
+and no preview deployments. Vercel handles both.
+
+## Updating the live site
+
+The deploy is git-driven — push to `main` and the host rebuilds. There is no
+separate upload step and no build output in the repo.
+
+```bash
+npm run dev
+```
+
+Edit the content file, check it at http://localhost:3000, then:
+
+```bash
+git add -A && git commit -m "Update O2D case study numbers" && git push
+```
+
+Vercel redeploys in ~1 minute; GitHub Pages in ~2 (watch it under the repo's
+Actions tab). Typical edits:
+
+| Change | File |
+| --- | --- |
+| New numbers on a system | `metrics` array in `src/content/projects.ts` |
+| New project | append one object to `projects` |
+| Add screenshots | drop files in `public/projects/<slug>/`, add to `images` |
+| New job / role | `src/content/experience.ts` |
+| Bio, skills, education, contact | `src/content/profile.ts` |
+
+Run `npm run build` before pushing if you changed anything beyond text — it
+catches type errors that would otherwise fail the deploy.
 
 ## Content rules this site follows
 
